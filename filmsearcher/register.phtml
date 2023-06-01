@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php require_once 'header.php'; ?>
+    </head>
+    <body>
+        <main>
+            <div class="sign-up">
+                <form name="myform"  action="logic/register.php" method="POST">
+                    <label for="name">Имя</label>
+                    <input type="text" class="input-sign-up" placeholder="Введите имя" name="name" required>
+                    <label for="email">Адрес электронной почты</label>
+                    <input type="email" class="input-sign-up" placeholder="Введите почту" name="email" required>
+                    <label for="psswd">Пароль</label>
+                    <input type="password" class="input-sign-up" placeholder="Введите пароль" name="psswd" required>
+                    <button style="margin-top: 15px; width: 300px;" type="submit" class="btn btn-dark">Зарегестрироваться</button>
+                </form>
+            </div>
+            <div>
+        </main>
+        <footer>
+
+        </footer>
+    </body>
+</html>
