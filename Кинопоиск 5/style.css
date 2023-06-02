@@ -1,0 +1,104 @@
+body, html {
+    height: 100%;
+}
+.body-class {
+    background-color:orange;
+}
+.sign-up {
+    margin-left: auto;
+    margin-right: auto;
+    width:400px;
+    padding: 50px;
+}
+.input-sign-up {
+    width: 300px;
+    height: 45px;
+}
+.carousel-box {
+    width: 440px;
+}
+.category {
+    width:400px;
+    height: 180px;
+}
+.table-for-carousel-and-category {
+    width: 1000px;
+    height: 590px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+.cell-visible {
+    border-collapse: collapse;
+    width: 600px;
+    text-align: left;
+    vertical-align: text-top;
+    padding-left: 20px;
+}
+.carousel-category {
+    width: 400px;
+}
+.background {
+    width: 900px;
+    min-height: 100vh;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+.movie-table {
+    width: inherit;
+    margin-left: auto;
+    margin-right: auto;
+}
+.poster-cell {
+    width: 315px;
+    height: 390px;
+
+}
+.poster {
+    width:250px;
+    margin-left: 30px;
+}
+.inscription1 {
+    height:80px;
+}
+.inscription2 {
+    vertical-align: text-top;
+    height: 230px;
+}
+.inscription3 {
+    vertical-align: top;
+}
+.overview-cell {
+    padding-left: 30px;
+}
+.one-item {
+    width: inherit;
+    min-height: 250px;
+}
+.one-item img {
+    width: 160px;
+    margin: 20px;
+}
+.link {
+    text-decoration: none;
+    color:black;
+}
+.white-link {
+    text-decoration: none;
+    color:white;
+}
+.account-table {
+    width: inherit;
+    border-collapse: collapse;
+}
+.folder-div {
+    border-bottom: 1px gray solid;
+    width: inherit;
+    height: 70px;
+    display: flex;
+}
+.folder-title {
+    margin: 15px;
+    font-size:larger;
+}
