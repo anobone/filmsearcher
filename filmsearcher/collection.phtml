@@ -1,0 +1,83 @@
+<?php
+include "logic/connect_db.php";
+?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <? 
+          require_once 'header.php';  
+          require_once 'logic/collection.php'; 
+        ?>
+    </head>
+    <body class="body-class" style="background-color: #f1d36f">
+        <main>
+            <div class="background">
+              <h2 class="folder-h2"><b>
+              <? 
+              if (($_SESSION['id'] != $user_iduser) && ($privacy == 1)) 
+                echo "GET OUT OF MY SWAMP</b></h2>"; 
+              else {
+                echo "$folder_name</b></h2>
+                <div style='clear: both'>
+                  <h4 class='folder-h2' style='display: inline-block'><b>Описание: </b></h4>
+                  <h5 style='display: inline-block'>$description_f</h5>
+                </div>
+                ";
+              }?>
+              <a href="#" class="link">
+                <div class="one-item-folder">
+                  <table>
+                    <tr>
+                      <td>
+                        <img src="картинки/картинка1.jpg" class="poster-in-folder">
+                      </td>
+                      <td>
+                        <p><b>Интерстеллар</b></p>
+                        <p><b>Год выхода: </b>2014</p>
+                        <p><b>Жанры: </b>Научная фантастика, приключения</p>
+                        <p><a class="highlighted-link" href="#">Удалить</a></p>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              <a href="media.phtml?idmedia=3" class="link">
+                <div class="one-item-folder">
+                  <table>
+                    <tr>
+                      <td>
+                        <img src="картинки/картинка2.jpg" class="poster-in-folder">
+                      </td>
+                      <td>
+                        <p><b>Богемская рапсодия</b></p>
+                        <p><b>Год выхода: </b>2018</p>
+                  <p><b>Жанры: </b>Музыкальный фильм, драма</p>
+                  <p><a class="highlighted-link" href="#">Удалить</a></p>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </a>
+              <a href="#" class="link">
+                <div class="one-item-folder">
+                  <table>
+                    <tr>
+                      <td>
+                        <img src="картинки/картинка3.jpg" class="poster-in-folder">
+                      </td>
+                      <td>
+                        <p><b>Гарри Поттер и философский камень</b></p>
+                        <p><b>Год выхода: </b>2002</p>
+                        <p><b>Жанры: </b>Фэнтези, при</p>
+                        <p><a class="highlighted-link" href="#">Удалить</a></p>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+            </div>
+        </main>
+        <footer>
+
+        </footer>
+    </body>
+</html>

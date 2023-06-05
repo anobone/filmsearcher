@@ -1,0 +1,27 @@
+<?php
+include "logic/connect_db.php"
+?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php require_once 'header.php'; ?>
+    </head>
+    <body>
+        <main>
+            <div class="sign-up">
+                <form name="myform" action="logic/login.php" method="POST">
+                    <label for="email">Адрес электронной почты</label>
+                    <input type="email" class="input-sign-up" placeholder="Введите почту" name="email" required>
+                    <label for="psswd" style="margin-top: 15px;">Пароль</label>
+                    <input type="password" class="input-sign-up" placeholder="Введите пароль" name="psswd" required>
+                    <button style="margin-top: 15px; width: 85px;" type="submit" class="btn btn-dark">Войти</button>
+                    <button style="margin-top: 15px; width: 210px;" type="button" class="btn btn-secondary"><a href="register.phtml" style="color:white; text-decoration: none;">Зарегестрироваться</a></button>
+                </form>
+            </div>
+        </main>
+        <footer>
+
+        </footer>
+    </body>
+</html>
