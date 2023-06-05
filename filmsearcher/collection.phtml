@@ -18,66 +18,68 @@ include "logic/connect_db.php";
               if (($_SESSION['id'] != $user_iduser) && ($privacy == 1)) 
                 echo "GET OUT OF MY SWAMP</b></h2>"; 
               else {
-                echo "$folder_name</b></h2>
+                
+                echo "<img src='картинки/folder.png' style='width:30px; margin-right: 15px; padding-bottom: 5px;'>$folder_name</b></h2>
                 <div style='clear: both'>
                   <h4 class='folder-h2' style='display: inline-block'><b>Описание: </b></h4>
-                  <h5 style='display: inline-block'>$description_f</h5>
+                  <h6 style='display: inline-block'>$description_f</h6>
                 </div>
                 ";
-              }?>
-              <a href="#" class="link">
-                <div class="one-item-folder">
-                  <table>
-                    <tr>
-                      <td>
-                        <img src="картинки/картинка1.jpg" class="poster-in-folder">
-                      </td>
-                      <td>
-                        <p><b>Интерстеллар</b></p>
-                        <p><b>Год выхода: </b>2014</p>
-                        <p><b>Жанры: </b>Научная фантастика, приключения</p>
-                        <p><a class="highlighted-link" href="#">Удалить</a></p>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              <a href="media.phtml?idmedia=3" class="link">
-                <div class="one-item-folder">
-                  <table>
-                    <tr>
-                      <td>
-                        <img src="картинки/картинка2.jpg" class="poster-in-folder">
-                      </td>
-                      <td>
-                        <p><b>Богемская рапсодия</b></p>
-                        <p><b>Год выхода: </b>2018</p>
-                  <p><b>Жанры: </b>Музыкальный фильм, драма</p>
-                  <p><a class="highlighted-link" href="#">Удалить</a></p>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
-              </a>
-              <a href="#" class="link">
-                <div class="one-item-folder">
-                  <table>
-                    <tr>
-                      <td>
-                        <img src="картинки/картинка3.jpg" class="poster-in-folder">
-                      </td>
-                      <td>
-                        <p><b>Гарри Поттер и философский камень</b></p>
-                        <p><b>Год выхода: </b>2002</p>
-                        <p><b>Жанры: </b>Фэнтези, при</p>
-                        <p><a class="highlighted-link" href="#">Удалить</a></p>
-                      </td>
-                    </tr>
-                  </table>
-                </div>
+                
+                while($row_f = $folders_has_media->fetch_assoc())
+                {
+                  $idmedia = $row_f['media_idmedia'];
+                  $item_genres = $con->query("SELECT * FROM films_genre WHERE media_idmedia='$idmedia'");
+                  $folder_media = $con->query("SELECT * FROM media WHERE idmedia = '$idmedia'");
+                  while($row_m = $folder_media->fetch_assoc()){
+                    $show_img = base64_encode($row_m['image_cover']);
+                    $title = $row_m['title'];
+                    $rating = $row_m['rating'];
+                    $release = date("Y",strtotime($row_m['release']));
+                    $cat = $row_m['category_idcategory'];
+
+                    ?>
+                    <a href="media.phtml?idmedia=<?php echo $idmedia;?>" class="link">
+                      <div class="one-item-folder">
+                        <table>
+                          <tr>
+                            <td>
+                              <img class="poster" src="data:image/jpeg;base64, <?=$show_img?>" alt="">
+                            </td>
+                            <td>
+                              <?
+                              echo"
+                              <p><b>$title /$release/</b><a href='category.php?idcategory=$cat'; class='link'><em style='color: #6495ED; margin-left: 15px;'>$category</em></p></a>
+                              <p><b>Жанры: </b>";
+                              while($row = $item_genres->fetch_assoc()){
+                                $idgenre = $row['genres_idgenre'];
+                                $genre_tmp = $con->query("SELECT * FROM genres WHERE idgenre='$idgenre'");
+                                while($row = $genre_tmp->fetch_assoc()){
+                                  $genre = $row['name'];
+                                  if ($gcheck > 1) 
+                                  {
+                                    echo "$genre, ";
+                                    $gcheck--;
+                                  }
+                                  else echo "$genre";
+                                }
+                              }
+                              echo"</p>
+                              <p><b>Рейтинг: </b>$rating</p>";
+                              ?>
+
+                              <p><a class="highlighted-link" href="#">Удалить из подборки</a></p>
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </a>
+                    <?
+                  }
+                }
+              }
+              ?>
             </div>
         </main>
-        <footer>
-
-        </footer>
     </body>
 </html>
