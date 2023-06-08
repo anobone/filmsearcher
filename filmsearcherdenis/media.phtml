@@ -1,0 +1,130 @@
+<?php
+include "logic/connect_db.php"
+?>
+
+<!DOCTYPE html>
+<html>
+    <head>
+      <?php require_once 'header.php'; ?>
+    </head>
+    <main style="background-color: #252850;">
+        <div class="background">
+            <table class="movie-table">
+                <?php
+                    $idmedia=$_GET['idmedia'];
+                    $query = $con->query("SELECT * FROM media WHERE idmedia=".$_GET['idmedia']."");
+                    $item_genres = $con->query("SELECT * FROM films_genre WHERE media_idmedia=".$_GET['idmedia']."");
+                    $img_screenshots = $con->query("SELECT * FROM images WHERE media_idmedia=".$_GET['idmedia']."");
+                    $gcheck=$item_genres->num_rows;
+                    $icheck=$img_screenshots->num_rows;
+                    while($row = $query->fetch_assoc()){
+                        $show_img = base64_encode($row['image_cover']);
+                        $title = $row['title'];
+                        $rating = $row['rating'];
+                        $release = date("Y",strtotime($row['release']));
+                        $description = $row['description'];
+                        $trailer = $row['trailer'];
+                        $embeded_trailer = str_replace("watch?v=", "embed/", $trailer);
+                    }
+                ?>
+                <tr>
+                    <td rowspan="3" class="poster-cell"><img class="poster" src="data:image/jpeg;base64, <?=$show_img?>" alt=""></td>
+                    <td class="inscription1"><h2><b><? echo $title?></b></h2></td>
+                </tr>
+                <tr>
+                    <td class="inscription2">
+                        <h4><p><b><? echo $release?></b></p></h4>
+                        <p><b>Жанры: </b>
+                        <? 
+                        while($row = $item_genres->fetch_assoc()){
+                            $idgenre = $row['genres_idgenre'];
+                            $genre_tmp = $con->query("SELECT * FROM genres WHERE idgenre='$idgenre'");
+                            while($row = $genre_tmp->fetch_assoc()){
+                                $genre = $row['name'];
+                                if ($gcheck > 1) 
+                                {
+                                    echo "<a href='genrepage.php?idgenre=$idgenre'>$genre</a>, ";
+                                    $gcheck--;
+                                }
+                                else echo "<a href='genrepage.php?idgenre=$idgenre'>$genre</a>";
+                            }
+                        }?></p>
+                        <p><b>Рейтинг: </b><? echo $rating?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="inscription3">
+                        <button style="margin-top: 15px; margin-bottom: 10px; width: 190px;" type="submit" class="btn btn-dark">Добавить к себе</button>
+                        <?
+                        if($_SESSION['isAdmin'] == 1)
+                            echo "<a href = 'update.php?idmedia=$idmedia'><button  style='width: 100px;height:41px;border-bottom: 3px grey solid ;border-left: 2px grey solid ; margin-top: 0px; color: #66a866;' type='submit' class='btn btn-light'>Изменить</button></a>"
+                        ?>
+                        <?
+                            if($_SESSION['isAdmin'] == 1) {
+                                echo "<button style='width: 100px;height:41px;border-bottom: 3px grey solid ;border-left: 2px grey solid ; margin-top: 0px; color: #8d555e;' type='button' class='btn btn-light' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>Удалить</button>";
+                          }?>
+                    </td>
+                </tr>
+                <!-- Modal -->
+              <form method="post">
+                <div  class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keydrop="false" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6 style="border-bottom: 2px solid rgba(111,90,83,0.42);" class="modal-title" id="staticBackdropLabel">УДАЛЕНИЕ ЭЛЕМЕНТА</h6>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+                                <h5 style="font-family:SansSerif;text-align: center;font-size: xx-large;background: rgba(143,126,126,0.37);padding: 5px;border: 5px solid rgba(161,152,152,0.06);border-radius:10px;">Вы действительно хотите удалить "<?echo $title; ?>"?</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="index.phtml"><button name="yes-delete"type="submit" style="background:rgba(206,116,116,0.91);border: 2px rgba(128,128,128,0.55) solid;color:white; " class="btn btn-light">Да, удалить элемент</button></a>
+                                <?
+                                if(isset($_POST['yes-delete'])){
+                                $delff = $con->prepare("DELETE FROM `films_genre`  WHERE `media_idmedia` = '$idmedia'");
+                                $delff->execute();
+                                $delfhm = $con->prepare("DELETE FROM `folders_has_media`  WHERE `media_idmedia` = '$idmedia'");
+                                $delfhm->execute();
+                                $delmedia = $con->prepare("DELETE FROM `media`  WHERE `idmedia` = '$idmedia'");
+                                $delmedia->execute();
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </form>
+                <!-- Modal -->
+                <tr>
+                    <td colspan="2" class="overview-cell">
+                        <h3><b>Описание</b></h3>
+                        <p style="margin-bottom: 0px;"><? echo $description?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="overview-cell">
+                        <? 
+                            if ($icheck != 0) 
+                            {   
+                                echo "<h3><b>Изображения</b></h3>";
+                                require_once "screenshots.php";
+                            }
+                        ?>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="overview-cell">
+                        <h3><b>Трейлер</b></h3>
+                        <iframe width="800" height="450" style="margin-bottom: 50px;" src="<? echo $embeded_trailer;?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
+    </body>
+</html>

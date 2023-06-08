@@ -1,0 +1,158 @@
+.insert{
+    margin-left: auto; margin-right: auto; width:400px; padding: 50px;
+}
+
+.input-file{
+    width: 300px; height: 45px;
+}
+
+.sign-up {
+    margin-left: auto;
+    margin-right: auto;
+    width:400px;
+    padding: 50px;
+}
+.input-sign-up {
+    width: 300px;
+    height: 45px;
+}
+.carousel-box {
+    width: 440px;
+}
+.category {
+    width:400px;
+    height: 180px;
+}
+.table-for-carousel-and-category {
+    width: 1000px;
+    height: 590px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+.cell-visible {
+    /*border:1px solid red;*/
+    border-collapse: collapse;
+    width: 600px;
+    text-align: left;
+    vertical-align: text-top;
+    padding-left: 20px;
+}
+.carousel-category {
+    width: 400px;
+}
+
+.carousel-screenshots {
+    width: 700px;
+    margin-bottom: 10px;
+}
+
+.background {
+    width: 900px;
+    min-height: 100vh;
+    background-color: white;
+    margin-left: auto;
+    margin-right: auto;
+}
+.movie-table {
+    width: inherit;
+    position: relative;
+}
+.poster-cell {
+    width: 315px;
+    height: 390px;
+}
+.poster {
+    width:250px;
+    margin-left: 30px;
+}
+.inscription1 {
+    height:80px;
+    padding-right: 30px;
+}
+.inscription2 {
+    vertical-align: text-top;
+    padding-right: 30px;
+    height: 200px;
+}
+.inscription3 {
+    vertical-align: top;
+}
+.overview-cell {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+}
+.one-item {
+    width: inherit;
+    min-height: 250px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+}
+.one-item img {
+    width: 160px;
+    margin: 20px;
+}
+.link {
+    text-decoration: none;
+    color:black;
+}
+
+.white-link {
+    text-decoration: none;
+    color:white;
+}
+
+.account-table {
+    width: inherit;
+    border-collapse: collapse;
+}
+.folder-div {
+    border-bottom: 1px gray solid;
+    width: inherit;
+    height: 70px;
+    display: flex;
+}
+.folder-title {
+    width: 450px;
+    margin-left: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    font-size:larger;
+}
+
+.dropbtn {
+    background-color: #6495ED;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #4169E1;}
