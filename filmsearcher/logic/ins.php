@@ -44,11 +44,11 @@ if(isset($_POST['insert'])) {
         $add = $con->prepare("INSERT INTO `media` (`idmedia`, `title`,`image_cover`, `release`, `rating`, `description`, `trailer`, `category_idcategory`) VALUES ( '$idadd', '$title','$img' , '$date', '$rate', '$description', '$trailer', '$kate')");
         $add->execute();
 
-         if(!empty($_FILES['imges_upload']['tmp_name'])){
+        if(!empty($_FILES['imges_upload']['tmp_name'])){
             $imges = addslashes(file_get_contents($_FILES['imges_upload']['tmp_name']));
             mysqli_query($con,"INSERT INTO `images`(`idimage`, `path`, `media_idmedia`) VALUES ('$idaddimg','$imges','$idadd')");
-         }
-    
+        }
+
         foreach($genre as $i){
             $genre = $i;
             mysqli_query($con,"INSERT INTO `films_genre` (`media_idmedia`, `genres_idgenre`) VALUES ('$idadd', '$genre')");

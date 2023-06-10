@@ -35,7 +35,7 @@ if (!empty($search_item))
                 //$search_media = $con->query("SELECT * FROM media WHERE title LIKE '%$search_item%' ORDER BY $sorting DESC");
                 break;
             }
-            case("film"):
+            case("films"):
                 $showing = "AND category_idcategory = 1";
                 break;
             case("series"):

@@ -235,7 +235,7 @@ while ($row = $query->fetch_assoc()) {
                                 </select></td>
                         </tr>
 
-                        <tr><td><input style="width:300px;border-radius:10px;border:2px solid rgba(150,148,148,0.27);font-family:SansSerif;" type="submit" name="update-genre" value="Изменить"></td></tr>
+                        <tr><td><input style="width:400px;border-radius:10px;border:2px solid rgba(150,148,148,0.27);font-family:SansSerif;" type="submit" name="update-genre" value="Изменить"></td></tr>
                     </table>
 
                     <table>
@@ -248,13 +248,24 @@ while ($row = $query->fetch_assoc()) {
                         </tr>
 
                         <tr>
-                            <td><input style="width:200px;border-radius:20px;border:2px solid rgba(150,148,148,0.27);padding:7px; margin-left:50px;background:#65eab4;font-family:SansSerif;font-size:18px;color:#7c7878;" type="submit" name="add-img" value="Добавить"></td>
+                            <td><input style="width:300px;border-radius:20px;border:2px solid rgba(150,148,148,0.27);padding:7px; margin-left:50px;margin-right:50px;background:#65eab4;font-family:SansSerif;font-size:18px;color:#7c7878;" type="submit" name="add-img" value="Добавить"></td>
                             <?
                             if(isset($_POST['add-img'])){
-                                $show2 = $con->query("SELECT * FROM images");
-                                $lastidimg = $show2->num_rows;
+                                    $show2 = $con->query("SELECT * FROM images");
+                                    $idaddimg = 1;
+                                    $count = $show2->num_rows;
+                                    while ($row = $show2->fetch_assoc()){
+                                        $idelement = $row['idimage'];
+                                        if (($idelement != 1) && ($idaddimg == 1)){
+                                            break;
+                                        }
+                                        else if (($idelement != $idaddimg)){
+                                            break;
+                                        }
+                                        $idaddimg++;
+                                    }
                                 if(!empty($_FILES['img-for-add']['tmp_name'])) $imges = addslashes(file_get_contents($_FILES['img-for-add']['tmp_name']));
-                                mysqli_query($con,"INSERT INTO `images`(`idimage`, `path`, `media_idmedia`) VALUES ('$lastidimg'+5,'$imges','$idmedia')");
+                                mysqli_query($con,"INSERT INTO `images`(`idimage`, `path`, `media_idmedia`) VALUES ('$idaddimg','$imges','$idmedia')");
                             }
                             ?>
                         </tr>
