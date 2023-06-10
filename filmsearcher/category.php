@@ -30,7 +30,7 @@ include "logic/connect_db.php"
                     if (!$check)
                     echo "<div style='margin: 20%;'>
                     <img src='картинки/not_found.png'>
-                    <h3><b>По запросу ничего не найдено</b></h3>
+                    <h3><b>На этой странице пока пусто</b></h3>
                     </div>";
                     ?>
                   </div>
@@ -55,29 +55,29 @@ include "logic/connect_db.php"
                                     <img class="poster" src="data:image/jpeg;base64, <?=$show_img?>" alt="">
                                 </td>
                             <td>
-                              <?
-                              echo"
-                              <p><b>$title /$release/</b></p>
-                              <p><b>Жанры: </b>";
-                              while($row = $item_genres->fetch_assoc()){
-                                  $idgenre = $row['genres_idgenre'];
-                                  $genre_tmp = $con->query("SELECT * FROM genres WHERE idgenre='$idgenre'");
-                                  while($row = $genre_tmp->fetch_assoc()){
+                                <?
+                                echo"
+                                <p><b>$title /$release/</b></p>
+                                <p><b>Жанры: </b>";
+                                while($row = $item_genres->fetch_assoc()){
+                                    $idgenre = $row['genres_idgenre'];
+                                    $genre_tmp = $con->query("SELECT * FROM genres WHERE idgenre='$idgenre'");
+                                    while($row = $genre_tmp->fetch_assoc()){
                                       $genre = $row['name'];
-                                      if ($gcheck > 1) 
-                                      {
-                                          echo "$genre, ";
-                                          $gcheck--;
-                                      }
-                                      else echo "$genre";
-                                  }
-                              }
-                              echo"</p>
-                              <p><b>Рейтинг: </b>$rating</p>
-                              <b>Описание:</b>
-                              <p>$description</p>
-                              ";
-                              ?>
+                                        if ($gcheck > 1) 
+                                        {
+                                            echo "<a href='genrepage.php?idgenre=$idgenre' class='blue-link'>$genre</a>, ";
+                                            $gcheck--;
+                                        }
+                                        else echo "<a href='genrepage.php?idgenre=$idgenre' class='blue-link'>$genre</a>";
+                                    }
+                                }
+                                echo"</p>
+                                <p><b>Рейтинг: </b>$rating</p>
+                                <b>Описание:</b>
+                                <p>$description</p>
+                                ";
+                                ?>
                             </td>
                                 </tr>
                             </table>

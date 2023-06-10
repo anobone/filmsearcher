@@ -25,6 +25,7 @@ include "logic/connect_db.php"
                         $description = $row['description'];
                         $trailer = $row['trailer'];
                         $embeded_trailer = str_replace("watch?v=", "embed/", $trailer);
+                        $idcategory = $row['category_idcategory'];
                     }
                 ?>
                 <tr>
@@ -43,10 +44,10 @@ include "logic/connect_db.php"
                                 $genre = $row['name'];
                                 if ($gcheck > 1) 
                                 {
-                                    echo "$genre, ";
+                                    echo "<a href='genrepage.php?idgenre=$idgenre' class='blue-link'>$genre</a>, ";
                                     $gcheck--;
                                 }
-                                else echo "$genre";
+                                else echo "<a href='genrepage.php?idgenre=$idgenre' class='blue-link'>$genre</a>";
                             }
                         }?></p>
                         <p><b>Рейтинг: </b><? echo $rating?></p>
@@ -55,6 +56,12 @@ include "logic/connect_db.php"
                 <tr>
                     <td class="inscription3">
                         <button id="show" style="margin-top: 15px; margin-bottom: 10px; width: 190px;" type="submit" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addModal">Добавить к себе</button>
+                        <?
+                            if($_SESSION['isAdmin'] == 1){
+                                echo "<a href='update.php?idmedia=$idmedia' class='white-link'><button style='margin-top: 15px; margin-bottom: 10px; width: 100px; color:white;' class='btn btn-info' type='submit'>Изменить</button></a>";
+                                echo "<button style='margin-top: 15px; margin-left: 5px; margin-bottom: 10px; width: 100px;' class='btn btn-danger' type='button' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>Удалить</button>";
+                            }
+                        ?>
                         <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <form name="myform"  action='logic/addmedia.php' method="POST">
@@ -102,7 +109,37 @@ include "logic/connect_db.php"
                                 </form>
                             </div>
                         </div>
-                    
+                        <form method="post">
+                            <div  class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keydrop="false" tabindex="-1" aria-labelledby="staticBackdrop" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h6 style="border-bottom: 2px solid rgba(111,90,83,0.42);" class="modal-title" id="staticBackdropLabel">УДАЛЕНИЕ ЭЛЕМЕНТА</h6>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5 style="font-family:SansSerif;text-align: center;font-size: xx-large;background: rgba(143,126,126,0.37);padding: 5px;border: 5px solid rgba(161,152,152,0.06);border-radius:10px;">Вы действительно хотите удалить "<?echo $title; ?>"?</h5>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="index.phtml"><button name="yes-delete"type="submit" style="background:rgba(206,116,116,0.91);border: 2px rgba(128,128,128,0.55) solid;color:white; " class="btn btn-light">Да, удалить элемент</button></a>
+                                            <?
+                                            if(isset($_POST['yes-delete'])){
+                                                $delff = $con->prepare("DELETE FROM `films_genre`  WHERE `media_idmedia` = '$idmedia'");
+                                                $delff->execute();
+                                                $delfhm = $con->prepare("DELETE FROM `folders_has_media`  WHERE `media_idmedia` = '$idmedia'");
+                                                $delfhm->execute();
+                                                $delimg=$con->prepare("DELETE FROM `images`  WHERE `media_idmedia` = '$idmedia'");
+                                                $delimg->execute();
+                                                $delmedia = $con->prepare("DELETE FROM `media`  WHERE `idmedia` = '$idmedia'");
+                                                $delmedia->execute();
+                                                header("Location:index.phtml");
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </td>
                 </tr>
                 <tr>
@@ -124,7 +161,7 @@ include "logic/connect_db.php"
                 </tr>
                 <tr>
                     <td colspan="2" class="overview-cell">
-                        <h3><b>Трейлер</b></h3>
+                        <h3><b><? if ($idcategory == 3) echo"Опенинг"; else echo"Трейлер";?></b></h3>
                         <iframe width="800" height="450" style="margin-bottom: 50px;" src="<? echo $embeded_trailer;?>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                     </td>
                 </tr>

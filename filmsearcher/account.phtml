@@ -21,8 +21,8 @@ include "logic/connect_db.php"
                         <td style="text-align: center;">
                             <a href="logic/exit.php"><button style="width: 100px; margin-top: 0px;" type="submit" class="btn btn-dark">Выйти</button></a>
                             <? 
-                              if ($_SESSION['isAdmin'] == 1) 
-                              echo "<a href='logic/insert.php'><button style='width: 180px; margin-top: 0px;' type='submit' class='btn btn-outline-primary'>Добавить фильм</button></a>"
+                              if ($_SESSION['isAdmin'] == 1)
+                              echo "<a href='insert.php'><button style='width: 180px; margin-top: 0px;' type='submit' class='btn btn-outline-primary'>Добавить медиа</button></a>"
                             ?>
                         </td>
                     </tr>

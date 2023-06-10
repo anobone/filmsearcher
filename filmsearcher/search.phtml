@@ -128,10 +128,10 @@ include "logic/connect_db.php";
                                                     $genre = $row['name'];
                                                     if ($gcheck > 1) 
                                                     {
-                                                        echo "$genre, ";
+                                                        echo "<a href='genrepage.php?idgenre=$idgenre' class='blue-link'>$genre</a>, ";
                                                         $gcheck--;
                                                     }
-                                                    else echo "$genre";
+                                                    else echo "<a href='genrepage.php?idgenre=$idgenre' class='blue-link'>$genre</a>";
                                                 }
                                             }
                                             echo"</p>

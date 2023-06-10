@@ -16,7 +16,7 @@ include "logic/connect_db.php";
               <h2 class="folder-h2"><b>
               <? 
               if (($_SESSION['id'] != $user_iduser) && ($privacy == 1)) 
-                echo "GET OUT OF MY SWAMP</b></h2>"; 
+                echo "Владелец этой подборки сделал её приватной</b></h2>"; 
               else {
                 $idcollection = $_GET['idcollection'];
                 
@@ -68,10 +68,10 @@ include "logic/connect_db.php";
                                   $genre = $row['name'];
                                   if ($gcheck > 1) 
                                   {
-                                    echo "$genre, ";
-                                    $gcheck--;
+                                      echo "<a href='genrepage.php?idgenre=$idgenre' class='blue-link'>$genre</a>, ";
+                                      $gcheck--;
                                   }
-                                  else echo "$genre";
+                                  else echo "<a href='genrepage.php?idgenre=$idgenre' class='blue-link'>$genre</a>";
                                 }
                               }
                               echo"</p>
